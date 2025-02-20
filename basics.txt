@@ -1,0 +1,242 @@
+Low-level design patterns, also known as object-oriented design patterns, are patterns that deal with specific issues and implementations within the code. These patterns typically focus on object creation, structure, and behavior. They can be categorized into three main types:
+
+1. Creational Patterns: Deal with object creation mechanisms.
+Creational patterns provide various object creation mechanisms, which increase flexibility and reuse of
+existing code. They abstract the instantiation process and make a system independent of how its objects
+are created, composed, and represented.
+
+2. Structural Patterns: Deal with object composition and typically identify simple ways to realize relationships between entities.
+Structural patterns deal with object composition or the way objects are related to each other to form
+larger structures. They ensure that if one part changes, the entire structure does not need to change.
+
+3. Behavioral Patterns: Deal with communication between objects.
+Behavioral patterns focus on communication between objects, how they interact, and how
+responsibilities are distributed among them.
+
+
+
+1. Classes
+A class is a blueprint for creating objects. It defines properties (attributes) and methods (functions) that
+the objects created from the class will have.
+Example:
+javascript
+class Car {
+constructor(brand, model) {
+this.brand = brand;
+this.model = model;
+}
+}
+displayDetails() {
+return `Car: ${this.brand} ${this.model}`;
+}
+// Creating an instance of the Car class
+const myCar = new Car('Toyota', 'Corolla');
+console.log(myCar.displayDetails()); // Outputs: Car: Toyota Corolla
+
+
+2. Objects
+Objects are instances of classes. They are concrete entities based on the blueprint provided by the class,
+holding real values for the properties defined by the class.
+const car1 = new Car('Honda', 'Civic');
+const car2 = new Car('Ford', 'Mustang');
+console.log(car1.displayDetails()); // Outputs: Car: Honda Civic
+console.log(car2.displayDetails()); // Outputs: Car: Ford Mustang
+
+3. Static vs Non-static
+Static: Static properties and methods belong to the class itself rather than to any particular object.
+They can be accessed directly using the class name without creating an instance of the class.
+Non-static: Non-static properties and methods belong to instances of the class. They require an
+object of the class to be accessed.
+Example:
+javascript
+class MathUtilities {
+static PI = 3.14159;
+static calculateCircleArea(radius) {
+return MathUtilities.PI * radius * radius;
+}
+}
+square(number) {
+return number * number;
+}
+// Accessing static properties and methods
+console.log(MathUtilities.PI); // Outputs: 3.14159
+console.log(MathUtilities.calculateCircleArea(5)); // Outputs: 78.53975
+// Accessing non-static methods
+const mathUtil = new MathUtilities();
+console.log(mathUtil.square(5)); // Outputs: 25
+
+4. Getters and Setters
+Getters and setters allow controlled access to the properties of an object. They are special methods that
+get and set the value of a property.
+Example:
+javascript
+class Person {
+constructor(name, age) {
+this._name = name;
+this._age = age;
+}
+// Getter for name
+get name() {
+return this._name;
+}
+// Setter for name
+set name(newName) {
+if (newName.length > 0) {
+this._name = newName;
+} else {
+console.log('Name cannot be empty');
+}
+}
+// Getter for age
+get age() {
+return this._age;
+}
+}
+// Setter for age
+set age(newAge) {
+if (newAge > 0) {
+this._age = newAge;
+} else {
+console.log('Age must be a positive number');
+}
+}
+const person = new Person('Alice', 30);
+console.log(person.name); // Outputs: Alice
+console.log(person.age); // Outputs: 30
+person.name = 'Bob'; // Using setter
+person.age = 35; // Using setter
+console.log(person.name); // Outputs: Bob
+console.log(person.age); // Outputs: 35
+person.name = ''; // Outputs: Name cannot be empty
+person.age = -5; // Outputs: Age must be a positive number
+In summary:
+Classes define the blueprint.
+Objects are instances created from the class.
+Static properties/methods belong to the class, not to instances.
+Non-static properties/methods belong to instances of the class.
+Getters and setters provide a controlled way to access and modify object properties.
+
+
+
+
+1. Abstraction
+Abstraction is the concept of hiding the complex implementation details and showing only the essential
+features of an object. This helps to reduce programming complexity and effort.
+Example:
+javascript
+class Vehicle {
+constructor(brand, model) {
+this.brand = brand;
+this.model = model;
+}
+}
+// Abstract method (should be implemented by subclasses)
+start() {
+throw new Error('Method "start()" must be implemented.');
+}
+class Car extends Vehicle {
+start() {
+return `${this.brand} ${this.model} is starting.`;
+}
+}
+const myCar = new Car('Toyota', 'Corolla');
+console.log(myCar.start()); // Outputs: Toyota Corolla is starting.
+
+
+2. Inheritance
+Inheritance is a mechanism where a new class inherits the properties and methods of an existing class.
+The existing class is called the parent or base class, and the new class is called the child or derived class.
+Example:
+javascript
+class Animal {
+constructor(name) {
+this.name = name;
+}
+}
+speak() {
+return `${this.name} makes a sound.`;
+}
+class Dog extends Animal {
+speak() {
+return `${this.name} barks.`;
+}
+}
+const myDog = new Dog('Rex');
+console.log(myDog.speak()); // Outputs: Rex barks.
+
+
+3. Polymorphism
+Polymorphism allows objects of different classes to be treated as objects of a common super class. It
+mainly refers to the ability to call the same method on different objects and have each of them respond
+in their own way.
+Example:
+javascript
+class Bird {
+constructor(name) {
+this.name = name;
+}
+}
+fly() {
+return `${this.name} is flying.`;
+}
+class Penguin extends Bird {
+fly() {
+return `${this.name} cannot fly.`;
+}
+}
+const sparrow = new Bird('Sparrow');
+const penguin = new Penguin('Penguin');
+console.log(sparrow.fly()); // Outputs: Sparrow is flying.
+console.log(penguin.fly()); // Outputs: Penguin cannot fly.
+
+
+4. Encapsulation
+Encapsulation is the concept of wrapping the data (variables) and code (methods) together as a single
+unit. It restricts direct access to some of an object’s components, which can prevent the accidental
+modification of data.
+Example:
+javascript
+class BankAccount {
+constructor(owner, balance) {
+this.owner = owner;
+this._balance = balance; // Private property
+}
+// Getter for balance
+get balance() {
+return this._balance;
+}
+// Method to deposit money
+deposit(amount) {
+if (amount > 0) {
+this._balance += amount;
+return `Deposited ${amount}. New balance: ${this._balance}`;
+} else {
+return 'Deposit amount must be positive.';
+}
+}
+// Method to withdraw money
+withdraw(amount) {
+if (amount > 0 && amount <= this._balance) {
+this._balance -= amount;
+return `Withdrew ${amount}. New balance: ${this._balance}`;
+} else {
+return 'Invalid withdrawal amount.';
+}
+}
+}
+const myAccount = new BankAccount('Alice', 1000);
+console.log(myAccount.deposit(500)); // Outputs: Deposited 500. New balance: 1500
+console.log(myAccount.withdraw(200)); // Outputs: Withdrew 200. New balance: 1300
+console.log(myAccount.balance); // Outputs: 1300
+console.log(myAccount._balance); // Ideally should not be accessed directly
+Logical Order of Concepts
+1. Abstraction: Start by defining abstract features and behavior that can be shared among different
+entities.
+2. Inheritance: Create base classes with common functionality and extend them to create specialized
+subclasses.
+3. Polymorphism: Use the same method names in different subclasses to perform different tasks,
+thus allowing for flexible and interchangeable object behavior.
+4. Encapsulation: Protect and hide the internal state of objects, ensuring that data is accessed and
+modified only through well-defined interfaces.
+This order helps in building a robust and flexible system by progressively introducing complexity while
+maintaining control over the data and behavior of objects.
