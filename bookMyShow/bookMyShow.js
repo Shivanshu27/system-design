@@ -584,3 +584,8 @@ class User {
 // User can view or cancel bookings
 
 // This design follows object-oriented principles and provides a solid foundation for building a scalable ticket booking system. For a production system, you'd need to add more robust error handling, authentication, and database integration.
+
+
+
+
+
