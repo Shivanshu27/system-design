@@ -1,0 +1,24 @@
+stateDiagram-v2
+    [*] --> Idle
+    
+    Idle --> HasMoney : insertMoney()
+    Idle --> Idle : selectItem() / "Please insert money first"
+    Idle --> Idle : dispenseItem() / "Please insert money first"
+    Idle --> Idle : cancel() / "No money to return"
+    
+    HasMoney --> HasMoney : insertMoney() / "Add to balance"
+    HasMoney --> ProductSelected : selectItem() [if sufficient funds]
+    HasMoney --> HasMoney : selectItem() [if insufficient funds]
+    HasMoney --> HasMoney : dispenseItem() / "Please select an item first"
+    HasMoney --> Idle : cancel() / "Return money"
+    
+    ProductSelected --> ProductSelected : insertMoney() / "Add to balance"
+    ProductSelected --> ProductSelected : selectItem() / "Item already selected"
+    ProductSelected --> Dispensing : dispenseItem() [if balance > 0]
+    ProductSelected --> Idle : dispenseItem() [if balance = 0]
+    ProductSelected --> HasMoney : cancel() / "Cancel selection"
+    
+    Dispensing --> HasMoney : insertMoney() / "Add to balance"
+    Dispensing --> HasMoney : selectItem()
+    Dispensing --> Dispensing : dispenseItem() / "Item already dispensed"
+    Dispensing --> Idle : cancel() / "Return remaining balance"
