@@ -249,3 +249,31 @@ Dependency Inversion Principle: High-level modules should not depend on low-leve
 Both should depend on abstractions.
 By following these principles, you can create more maintainable, scalable, and flexible software designs.
 If you have any questions or need further examples, feel free to ask!
+
+
+
+
+In my MERN projects, I use several design patterns based on the problem at hand:
+
+Module Pattern:
+I use this in both Node.js and React to encapsulate code and avoid polluting the global namespace. For example, separating route handlers, controllers, and services in Node.js.
+
+MVC (Model-View-Controller):
+I structure the backend using MVC — Models handle MongoDB schemas, Views (if applicable) are served through the frontend, and Controllers manage business logic and route handling.
+
+Observer Pattern (Pub/Sub):
+For features like notifications or real-time data updates (e.g., with WebSockets or EventEmitters in Node.js), I use the observer pattern to decouple the event producers from consumers.
+
+Factory Pattern:
+When creating instances of reusable components or dynamic services (e.g., different types of loggers, or different payment gateways), I use factory functions to abstract the instantiation.
+
+Singleton Pattern:
+For shared instances like database connections or configuration modules, I make sure they’re implemented as singletons to avoid multiple instances.
+
+Higher-Order Components (HOC) & Custom Hooks in React:
+These are React-specific patterns I use frequently to reuse logic across components — for things like authentication, fetching data, or form handling.
+
+Strategy Pattern:
+For handling different algorithms or business rules — like applying different types of discount codes in a cart — I use the strategy pattern to select the appropriate behavior at runtime.
+
+I focus on clean architecture, separation of concerns, and keeping the code testable and maintainable.
